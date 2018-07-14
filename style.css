@@ -1,0 +1,85 @@
+table { 
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+	font-size: 80%;
+	color: #555;
+	border-collapse: collapse;
+	margin: 0;
+	max-width: 90%;
+	}
+th {
+	vertical-align: top;
+	max-width: 18em;
+	}
+td { 
+	vertical-align: top; 
+	border: 1px solid #ccc;
+	text-align: start;
+	padding: 0 4px;
+	}
+.count {
+	text-align: center;
+	}
+body > p {
+	text-align: center;
+	margin: 1em 2em;
+	}
+.select {
+	border: 0;
+	font-size: 80%;
+	color: #ccc;
+	}
+.select:hover {
+	background-color: #FFFFC7;
+	border-radius: 2px;
+	padding: 0 4px;
+	color: #666;
+	cursor:pointer;
+	}
+
+
+#options {
+    text-align: center;
+    font-size: 80%;
+    }
+
+
+#charInfo {
+    background-color: #FFF4E4;
+    border: 1px solid bisque;
+    border-radius: 1em;
+    margin: 1em 2em;
+    clear: both;
+    padding: .5em;
+    margin: .5em 2em 0 2em;
+    }
+
+.largeCharDiv {
+    float: left;
+    margin: .5em 1em .5em .5em;
+    border-radius: 1em;
+    }
+
+.largeChar {
+    border: 1px solid bisque;
+    border-radius: .05em;
+    background-color: white;
+    color: black;
+    line-height: 1.2;
+    }
+
+.charNameAndNum {
+    margin: 1em 0;
+    font-weight: bold;
+    }
+.scriptGroup {
+    margin: .5em 0;
+    font-size: 80%;
+    }
+.descriptions {
+    line-height: 1.2;
+    font-size: 90%;
+    margin-bottom: 0;
+    margin-right: 7.5%;
+}
+
+

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Analyse string tool</title>
+<meta name="description" content="Tool to analyse what characters are in a string and list information about them." />
+<link rel="stylesheet" href="/shared/style/docs.css" />
+<link rel="stylesheet" href="style.css" />
+
+<script type="text/javascript" src="/shared/code/boilerplate.js"></script>
+<script src="../uniview/functions.js"></script>
+<script src="../uniview/u.js"></script>
+<script src="../uniview/propNames.js"></script>
+<script src="../uniview/subtitles.js"></script>
+<script src="../uniview/descriptions.js"></script>
+<script src="../shared/code/scriptGroups.js"></script>
+<script src="script.js"></script>
+</head>
+
+<body class="app">
+<header>
+<div id="header-boilerplate"></div>
+<script>document.getElementById('header-boilerplate').innerHTML = bp_appHeader('/shared/images/world.gif','Analyse string','');</script>
+</header>
+
+
+<p style="margin-bottom: 0; position:-webkit-sticky; position:sticky; top:0; right:0;"><input id="in" style="width: 80%; font-size: 200%; line-height: 2;" placeholder="String to analyse goes here."/></p>
+<div id="options"><span style="font-weight: bold;">Show:</span> 
+<label>Large image<input id="showLargeImg" type="checkbox" checked onclick="makeList(document.getElementById('in').value)"/></label> &nbsp;
+<label>Block info<input id="showBlockInfo" type="checkbox" checked onclick="makeList(document.getElementById('in').value)" /></label> &nbsp;
+<label>Properties<input id="showProps" type="checkbox" checked onclick="makeList(document.getElementById('in').value)" /></label> &nbsp;
+<label>Other<input id="showOther" type="checkbox" checked onclick="makeList(document.getElementById('in').value)" /></label> &nbsp;
+<label>Descriptions<input id="showDescriptions" type="checkbox" checked onclick="makeList(document.getElementById('in').value)"/></label>
+</div>
+<p>
+<button onclick="makeList(document.getElementById('in').value)">Analyse the text above</button></p>
+<div id="out"></div>
+
+
+<details>
+<summary style="margin-left: 7.5%; cursor:pointer;"><strong>Notes</strong></summary>
+
+<aside class="sidebar">
+  <div class="section">
+    <h2 class="flush">Related links</h2>
+    <p><a target="_blank" href="/uniview/">UniView</a></p>
+    <p><a target="_blank" href="/apps/conversion/">Unicode code converter</a></p>
+  </div>
+</aside>
+
+<p id="status">Updated <!-- #BeginDate format:IS1m -->2018-07-14  9:45<!-- #EndDate -->  &bull; tags <a href="http://rishida.net/blog/index.php?tag=counterstyles" title="Show all blog posts tagged with 'unicode'">unicode</a>, <a href="http://rishida.net/blog/index.php?tag=counterstyles" title="Show all blog posts tagged with 'encoding'">encoding</a>, <a href="http://rishida.net/blog/?tag=apps" title="Show all blog posts tagged with 'apps'">apps</a></p>
+
+<section>
+  <p>This app lists the characters in text that you paste into the large box at the top, and produces information about each character.</p>
+  <p>You can change the amount of information and the size of the image for each character using the checklist items.</p>
+</section>
+
+</details>
+
+<div class="smallprint"><span id="version">Last changed <a href="https://github.com/r12a/app-analysestring/commits/gh-pages/"><span id="version-info"> 
+  <!-- #BeginDate format:IS1m -->2018-07-14  9:45<!-- #EndDate --> 
+  </span></a> GMT. &nbsp;&bull;&nbsp; Make a <a href="https://github.com/r12a/app-analysestring/issues/new" target="_blank">comment</a>. &nbsp;&bull;&nbsp; Licence <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC-By</a> © <a href="mailto:r12a@w3.org">r12a</a>.</span></div>
+  
+ <script>
+// check for parameters and take appropriate action
+parameters = location.search.split('&');
+parameters[0] = parameters[0].substring(1);
+for (var p=0;p<parameters.length;p++) {  
+	pairs = parameters[p].split('=');
+	if (pairs[0] == 'chars') { if (pairs[1]) { document.getElementById('in').value = decodeURIComponent(pairs[1]); makeList(decodeURIComponent(pairs[1])) } }
+//	if (pairs[0] == 'charlist') { if (pairs[1]) { document.getElementById("picker").value = decodeURIComponent(pairs[1]);showCharacterList(decodeURIComponent(pairs[1])); } }
+	}
+</script>
+</body>
+</html>
