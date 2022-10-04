@@ -60,6 +60,8 @@ function listChars ( codepoint ) {
 	var MsPadding = ''  // Will be set to a space if this is a non-spacing mark
 	var description = false
 	var div, span, img, table, tbody, tr, td, button
+    hexCP = codepoint.toString(16).toUpperCase()
+    while (hexCP.length < 4) hexCP = '0'+hexCP
 
     var out = '<div class="charInfo" id="charInfo">'
     
@@ -67,27 +69,27 @@ function listChars ( codepoint ) {
 	charType = getCharType( codepoint )
 	scriptGroup = findScriptGroup(codepoint)
 	
-	if (charType == 2 || charType == 3 || charType == 5) { 
+	if (charType == IN_U_DB || charType == HAN_HANG_TANG || charType == PRIVATEUSE) { 
 		var cRecord = charData.split(';')
-		if (cRecord[3] > 0) { MsPadding = '\u00A0' }  // ie. this is a combining character
+		if (cRecord[CAN_COMB_CL] > 0) { MsPadding = '\u00A0' }  // ie. this is a combining character
 
 		// draw the large character
         out += '<div class="largeCharDiv">'
         
         // add img, if available and graphic toggle set
-		if (charType === 2) {
-            out += '<img class="largeChar" title="' + parseInt(cRecord[0], 16) + '" '
+		if (charType === IN_U_DB) {
+            out += '<img class="largeChar" title="' + codepoint + '" '
             if (document.getElementById('showLargeImg').checked) size = '/large' 
             else size = ''
-            out += 'src="' + '../c/'+scriptGroup.replace(/ /g,'_')+size+'/'+cRecord[0]+'.png' + '"/>' 
+            out += 'src="' + '../c/'+scriptGroup.replace(/ /g,'_')+size+'/'+hexCP+'.png' + '"/>' 
             }       
         // otherwise add text
 		else { 
-            out += '<span class="largeChar" title="' + parseInt(cRecord[0], 16) + '"'
+            out += '<span class="largeChar" title="' + codepoint + '"'
             if (document.getElementById('showLargeImg').checked) out += ' style="font-size:190px;"'
             else out += ' style="font-size: 28px;"'
             out += '>'
-            out += MsPadding + getCharFromInt(parseInt(cRecord[0],16))
+            out += MsPadding + getCharFromInt(codepoint)
             out += '</span>'
 			}
        out += "</div>" 
@@ -96,7 +98,7 @@ function listChars ( codepoint ) {
 		// character no. & name
         out += '<div class="charNameAndNum">'
         //out += '<span class="charNum" style="margin-right:.75em;">' + 'U+'+cRecord[HEX_NUM] + '</span>'
-        out += '<a class="charNum" style="margin-right:.75em;" target="blockdata" href="../uniview/?char='+cRecord[HEX_NUM]+'">' + 'U+'+cRecord[HEX_NUM] + '</a>'
+        out += '<a class="charNum" style="margin-right:.75em;" target="blockdata" href="../uniview/?char='+hexCP+'">' + 'U+'+hexCP + '</a>'
         out += ' '+cRecord[CHAR_NAME]
         out += '</div>'
         
@@ -188,7 +190,7 @@ function listChars ( codepoint ) {
         out += '<tr><td>Unicode version:</td><td>' + cRecord[AGE_FIELD] + '</td></tr>'
         
 		// add character
-        out += '<tr><td>As text:</td><td class="astext">' + MsPadding + getCharFromInt(parseInt(cRecord[0],16)) + '</td></tr>'
+        out += '<tr><td>As text:</td><td class="astext">' + MsPadding + getCharFromInt(codepoint) + '</td></tr>'
         
 		// add decimal value
         out += '<tr><td>Decimal:</td><td class="astext">' + codepoint + '</td></tr>'
@@ -200,19 +202,19 @@ function listChars ( codepoint ) {
         }
 
 		// return block name if this character listed as contained in block doc
-		var blockfile = charInfoPointer(cRecord[HEX_NUM])
+		var blockfile = charInfoPointer(hexCP)
         //blockfile = false
 		
 
 		if (document.getElementById('showDescriptions').checked) { 
 		// display Description heading
-		if (desc[eval('0x'+cRecord[HEX_NUM])] || blockfile) { 
+		if (desc[eval('0x'+hexCP)] || blockfile) { 
             out += '<p class="descriptions"><strong>Description:</strong>'
             }
 
         // display any Unicode descriptions
-        if (desc[eval('0x'+cRecord[HEX_NUM])]) {
-            dRecord = desc[eval('0x'+cRecord[HEX_NUM])].split('¶')
+        if (desc[eval('0x'+hexCP)]) {
+            dRecord = desc[eval('0x'+hexCP)].split('¶')
             description = true
             for (var j=0; j < dRecord.length; j++ ) {
                 out += dRecord[j] + '<br/>'
@@ -221,7 +223,7 @@ function listChars ( codepoint ) {
 
         // display link to character notes
         if (blockfile) {
-            out += '<br/><a class="notesexplx" target="blockdata" href="'+'../scripts/'+blockfile+'/block#char'+cRecord[HEX_NUM]+ '">Show character notes.</a>'
+            out += '<br/><a class="notesexplx" target="blockdata" href="'+'../scripts/'+blockfile+'/block#char'+hexCP+ '">Show character notes.</a>'
             }
         out += '</p>'
         
@@ -240,7 +242,7 @@ function listChars ( codepoint ) {
 		// add link to Unihan db
 		if (pageNum > 0 && scriptGroup != 'Hangul Syllables') {
             out += '<p class="descriptions"><strong>Description:</strong>'
-            out += '<br/>Show in <a href="http://www.unicode.org/cgi-bin/GetUnihanData.pl?codepoint='+cRecord[0]+'&useutf8=true" target="blockdata">UniHan database</a>'
+            out += '<br/>Show in <a href="http://www.unicode.org/cgi-bin/GetUnihanData.pl?codepoint='+hexCP+'&useutf8=true" target="blockdata">UniHan database</a>'
             out += '</p>'
 			}
 /*		
