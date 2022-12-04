@@ -105,7 +105,7 @@ function listChars ( codepoint ) {
 
         if (document.getElementById('showBlockInfo').checked) {
             //find script group
-            out += '<p class="scriptGroup"><strong>Unicode block:</strong> <a href="../uniview/?block='+scriptGroup+'" target="blockdata">' + scriptGroup + '</a>'
+            out += '<p class="scriptGroup"><strong>Unicode block:</strong> <a href="../uniview/index.html?block='+scriptGroup+'" target="blockdata">' + scriptGroup + '</a>'
 
 
             // display script group
@@ -196,6 +196,10 @@ function listChars ( codepoint ) {
         out += '<tr><td>Decimal:</td><td class="astext">' + codepoint + '</td></tr>'
         
 
+		// add link to properties
+        out += `<tr><td colspan="2"><a href="https://util.unicode.org/UnicodeJsps/character.jsp?a=${ hexCP }" target="_blank">Show more properties</a></td></tr>`
+        
+
         }
 
         out += '</tbody></table>'
@@ -204,6 +208,7 @@ function listChars ( codepoint ) {
 		// return block name if this character listed as contained in block doc
 		var blockfile = charInfoPointer(hexCP)
         //blockfile = false
+        
 		
 
 		if (document.getElementById('showDescriptions').checked) { 
@@ -223,7 +228,7 @@ function listChars ( codepoint ) {
 
         // display link to character notes
         if (blockfile) {
-            out += '<br/><a class="notesexplx" target="blockdata" href="'+'../scripts/'+blockfile+'/block#char'+hexCP+ '">Show character notes.</a>'
+            out += '<br/><a class="notesexplx" target="blockdata" href="'+'../scripts/'+blockfile+'/block.html#char'+hexCP+ '">Show character notes.</a>'
             }
         out += '</p>'
         
